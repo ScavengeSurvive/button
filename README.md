@@ -1,5 +1,7 @@
 # Button
 
+Simple buttons for players to interact with, more minimal than a pickup and more elegant than a command.
+
 A simple framework using streamer areas and key checks to give the in-game effect of physical buttons that players must press instead of using a command. It was created as an alternative to the default GTA:SA spinning pickups for a few reasons:
 
 * A player might want to stand where a pickup is but not use it (if the pickup is a building entrance or interior warp, he might want to stand in the doorway without being teleported.)

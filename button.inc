@@ -708,7 +708,7 @@ stock GetPlayerButtonID(playerid) {
 	foreach(new i : btn_NearIndex[playerid]) {
 		curid = btn_Near[playerid][i];
 
-		curdistance = sif_Distance(x, y, z, btn_Data[curid][btn_posX], btn_Data[curid][btn_posY], btn_Data[curid][btn_posZ]);
+		curdistance = GetDistance3D(x, y, z, btn_Data[curid][btn_posX], btn_Data[curid][btn_posY], btn_Data[curid][btn_posZ]);
 
 		if(curdistance < closetsdistance) {
 			closetsdistance = curdistance;

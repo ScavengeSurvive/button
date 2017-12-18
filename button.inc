@@ -384,8 +384,8 @@ stock CreateButton(
 ) {
 	new buttonid = Iter_Free(btn_Index);
 
-	if(buttonid == -1) {
-		err("BTN_MAX limit reached");
+	if(buttonid == INVALID_ITERATOR_SLOT) {
+		fatal("BTN_MAX limit reached");
 		return INVALID_BUTTON_ID;
 	}
 

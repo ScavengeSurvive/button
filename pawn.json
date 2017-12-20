@@ -9,9 +9,7 @@
         "Southclaws/samp-logger",
         "ScavengeSurvive/test-boilerplate",
         "ScavengeSurvive/action-text",
-        "ScavengeSurvive/mathutil",
-
-        "Zeex/samp-plugin-crashdetect/include"
+        "ScavengeSurvive/mathutil"
     ],
     "runtime": {
         "plugins": ["samp-incognito/samp-streamer-plugin"]

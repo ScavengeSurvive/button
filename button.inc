@@ -3,10 +3,11 @@
 #endif
 #define _button_included
 
+#include <a_samp>
+#include <logger>
 #include <YSI\y_iterate>
 #include <YSI\y_timers>
 #include <streamer>
-#include <logger>
 #include <action-text>
 #include <mathutil>
 
@@ -121,7 +122,7 @@ forward DestroyButtonLabel(buttonid);
 Removes the label from a button.
 
 # Returns
-Boolean to indicate success or failure. -1 if the button did not have a label.
+Boolean to indicate success or failure. 2 if the button did not have a label.
 */
 
 forward GetButtonPos(buttonid, &Float:x, &Float:y, &Float:z);
@@ -485,7 +486,7 @@ stock SetButtonLabel(buttonid, text[], colour = 0xFFFF00FF, Float:range = BTN_DE
 
 	if(IsValidDynamic3DTextLabel(btn_Data[buttonid][btn_label])) {
 		UpdateDynamic3DTextLabelText(btn_Data[buttonid][btn_label], colour, text);
-		return 2;
+		return 0;
 	}
 
 	btn_Data[buttonid][btn_label] = CreateDynamic3DTextLabel(

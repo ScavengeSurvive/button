@@ -215,7 +215,7 @@ Sets the button's extra data field, this is one cell of blank space allocated fo
 Boolean to indicate success or failure.
 */
 
-forward GetButtonExtraData(buttonid);
+forward GetButtonExtraData(buttonid, &data);
 /*
 # Description
 Retrieves the integer assigned to the button set with SetButtonExtraData.
@@ -669,12 +669,14 @@ stock SetButtonExtraData(buttonid, data) {
 	return 0;
 }
 
-stock GetButtonExtraData(buttonid) {
+stock GetButtonExtraData(buttonid, &data) {
 	if(!Iter_Contains(btn_Index, buttonid)) {
-		return 0;
+		return 1;
 	}
 
-	return btn_Data[buttonid][btn_exData];
+	data = btn_Data[buttonid][btn_exData];
+
+	return 0;
 }
 
 // btn_Pressing

@@ -1,4 +1,6 @@
 {
+    "user": "ScavengeSurvive",
+    "repo": "button",
     "entry": "test.pwn",
     "output": "test.amx",
     "dependencies": [
@@ -7,11 +9,7 @@
         "Zeex/amx_assembly",
         "Misiur/YSI-Includes",
         "samp-incognito/samp-streamer-plugin",
-        "ScavengeSurvive/test-boilerplate",
         "ScavengeSurvive/action-text",
         "ScavengeSurvive/mathutil"
-    ],
-    "runtime": {
-        "plugins": ["samp-incognito/samp-streamer-plugin"]
-    }
+    ]
 }

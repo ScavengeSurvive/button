@@ -10,18 +10,10 @@ A simple framework using streamer areas and key checks to give the in-game effec
 
 ## Installation
 
-Simply add to your `pawn.json`/`pawn.yaml`:
-
-```json
-{
-    "dependencies": ["ScavengeSurvive/button"]
-}
-```
-
-Update your `dependencies` directory:
+Simply install to your project:
 
 ```bash
-sampctl package ensure
+sampctl package install ScavengeSurvive/button
 ```
 
 Include in your code and begin using the library:
@@ -37,5 +29,3 @@ To test, simply run the package:
 ```bash
 sampctl package run
 ```
-
-And connect to `localhost:7777` to test.

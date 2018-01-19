@@ -29,3 +29,5 @@ To test, simply run the package:
 ```bash
 sampctl package run
 ```
+
+And observe the y_testing output.

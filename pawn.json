@@ -6,9 +6,13 @@
     "dependencies": [
         "Southclaws/samp-stdlib",
         "Southclaws/samp-logger",
-        "Misiur/YSI-Includes",
+        "pawn-lang/YSI-Includes",
         "samp-incognito/samp-streamer-plugin",
         "ScavengeSurvive/action-text",
         "ScavengeSurvive/mathutil"
-    ]
+    ],
+    "dev_dependencies": ["ScavengeSurvive/test-boilerplate"],
+    "runtime": {
+        "mode": "y_testing"
+    }
 }

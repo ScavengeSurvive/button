@@ -798,7 +798,7 @@ stock GetButtonAngleToPlayer(playerid, buttonid, &Float:angle) {
 
 	GetPlayerPos(playerid, x, y, z);
 
-	angle = sif_GetAngleToPoint(btn_Data[buttonid][btn_posX], btn_Data[buttonid][btn_posY], x, y);
+	angle = GetAngleToPoint(btn_Data[buttonid][btn_posX], btn_Data[buttonid][btn_posY], x, y);
 
 	return 0;
 }

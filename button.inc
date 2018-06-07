@@ -235,7 +235,7 @@ Returns the ID of the button that the player is currently pressing. This will
 only return a value while playerid is holding down the interact key at a button.
 */
 
-forward GetPlayerButtonID(playerid);
+forward GetPlayerButtonID(playerid, &Button:id);
 /*
 # Description
 Returns the closest button that a player is standing within the area of.
@@ -685,13 +685,13 @@ stock GetPlayerPressingButton(playerid) {
 	return btn_Pressing[playerid];
 }
 
-stock GetPlayerButtonID(playerid) {
+stock GetPlayerButtonID(playerid, &Button:id) {
 	if(!IsPlayerConnected(playerid)) {
-		return INVALID_BUTTON_ID;
+		return 1;
 	}
 
 	if(Iter_Count(btn_NearIndex[playerid]) == 0) {
-		return INVALID_BUTTON_ID;
+		return 2;
 	}
 
 	new
@@ -699,7 +699,6 @@ stock GetPlayerButtonID(playerid) {
 		Float:y,
 		Float:z,
 		curid,
-		closestid,
 		Float:curdistance,
 		Float:closetsdistance = 99999.9;
 
@@ -712,11 +711,15 @@ stock GetPlayerButtonID(playerid) {
 
 		if(curdistance < closetsdistance) {
 			closetsdistance = curdistance;
-			closestid = curid;
+			id = curid;
 		}
 	}
 
-	return closestid;
+	if(Iter_Contains(btn_Index, id)) {
+		return 0;
+	}
+
+	return 3;
 }
 
 stock GetPlayerButtonList(playerid, list[], &size, bool:validate = false) {

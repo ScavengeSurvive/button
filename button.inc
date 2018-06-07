@@ -335,7 +335,7 @@ enum e_button_range_data {
 
 static
 	btn_Data[BTN_MAX][E_BTN_DATA],
-	btn_Near[MAX_PLAYERS][BTN_MAX_INRANGE],
+	Button:btn_Near[MAX_PLAYERS][BTN_MAX_INRANGE],
 	Iterator:btn_NearIndex[MAX_PLAYERS]<BTN_MAX_INRANGE>,
 	Button:btn_Pressing[MAX_PLAYERS];
 
@@ -698,7 +698,7 @@ stock GetPlayerButtonID(playerid, &Button:id) {
 		Float:x,
 		Float:y,
 		Float:z,
-		curid,
+		Button:curid,
 		Float:curdistance,
 		Float:closetsdistance = 99999.9;
 
@@ -715,7 +715,7 @@ stock GetPlayerButtonID(playerid, &Button:id) {
 		}
 	}
 
-	if(Iter_Contains(btn_Index, id)) {
+	if(Iter_Contains(btn_Index, _:id)) {
 		return 0;
 	}
 
@@ -933,7 +933,7 @@ hook OnPlayerEnterDynArea(playerid, areaid) {
 			if(Iter_Contains(btn_Index, data[1])) {
 				new cell = Iter_Free(btn_NearIndex[playerid]);
 
-				btn_Near[playerid][cell] = data[1];
+				btn_Near[playerid][cell] = Button:data[1];
 				Iter_Add(btn_NearIndex[playerid], cell);
 
 				ShowActionText(playerid, btn_Data[Button:data[1]][btn_text]);
@@ -976,7 +976,7 @@ process_LeaveDynamicArea(playerid, areaid) {
 	CallLocalFunction("OnPlayerLeaveButtonArea", "dd", playerid, data[1]);
 
 	foreach(new i : btn_NearIndex[playerid]) {
-		if(btn_Near[playerid][i] == data[1]) {
+		if(btn_Near[playerid][i] == Button:data[1]) {
 			Iter_Remove(btn_NearIndex[playerid], i);
 			break;
 		}

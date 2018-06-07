@@ -1,7 +1,6 @@
 {
 	"user": "ScavengeSurvive",
 	"repo": "button",
-	"tag": "1.7.2",
 	"entry": "test.pwn",
 	"output": "test.amx",
 	"dependencies": [

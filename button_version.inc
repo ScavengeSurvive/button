@@ -3,5 +3,5 @@
 // To update the version number for a new release, run "sampctl package release"
 
 #define BUTTON_VERSION_MAJOR (1)
-#define BUTTON_VERSION_MINOR (7)
-#define BUTTON_VERSION_PATCH (2)
+#define BUTTON_VERSION_MINOR (8)
+#define BUTTON_VERSION_PATCH (0)

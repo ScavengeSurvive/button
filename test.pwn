@@ -6,14 +6,14 @@
 
 
 Test:ButtonCreate() {
-	new buttonid = CreateButton(1.0, 2.0, 3.0, "Button", 4, 8, 2.5, 1, "Label", 0x1C1C1CFF, 12.5);
+	new Button:buttonid = CreateButton(1.0, 2.0, 3.0, "Button", 4, 8, 2.5, 1, "Label", 0x1C1C1CFF, 12.5);
 	ASSERT(IsValidButton(buttonid));
 	ASSERT(IsValidDynamicArea(GetButtonArea(buttonid)) == 1);
 	ASSERT(DestroyButton(buttonid) == 0);
 }
 
 Test:ButtonSetArea() {
-	new buttonid = CreateButton(1.0, 2.0, 3.0, "Button", 4, 8, 2.5, 1, "Label", 0x1C1C1CFF, 12.5);
+	new Button:buttonid = CreateButton(1.0, 2.0, 3.0, "Button", 4, 8, 2.5, 1, "Label", 0x1C1C1CFF, 12.5);
 	new tmp = CreateDynamicCircle(20.0, 20.0, 4.0);
 	ASSERT(SetButtonArea(buttonid, tmp) == 0);
 	ASSERT(GetButtonArea(buttonid) == tmp);
@@ -21,7 +21,7 @@ Test:ButtonSetArea() {
 }
 
 Test:ButtonSetLabelText() {
-	new buttonid = CreateButton(1.0, 2.0, 3.0, "Button", 4, 8, 2.5, 1, "Label", 0x1C1C1CFF, 12.5);
+	new Button:buttonid = CreateButton(1.0, 2.0, 3.0, "Button", 4, 8, 2.5, 1, "Label", 0x1C1C1CFF, 12.5);
 	ASSERT(SetButtonLabel(buttonid, "New text", -1, 42.0) == 0);
 	ASSERT(DestroyButtonLabel(buttonid) == 0);
 	ASSERT(DestroyButtonLabel(buttonid) == 2);
@@ -30,7 +30,7 @@ Test:ButtonSetLabelText() {
 }
 
 Test:ButtonText() {
-	new buttonid = CreateButton(1.0, 2.0, 3.0, "Button", 4, 8, 2.5, 1, "Label", 0x1C1C1CFF, 12.5);
+	new Button:buttonid = CreateButton(1.0, 2.0, 3.0, "Button", 4, 8, 2.5, 1, "Label", 0x1C1C1CFF, 12.5);
 
 	new string[128];
 	ASSERT(GetButtonText(buttonid, string) == 0);
@@ -44,7 +44,7 @@ Test:ButtonText() {
 }
 
 Test:ButtonData() {
-	new buttonid = CreateButton(1.0, 2.0, 3.0, "Button", 4, 8, 2.5, 1, "Label", 0x1C1C1CFF, 12.5);
+	new Button:buttonid = CreateButton(1.0, 2.0, 3.0, "Button", 4, 8, 2.5, 1, "Label", 0x1C1C1CFF, 12.5);
 	new data;
 	ASSERT(SetButtonExtraData(buttonid, 50) == 0);
 	ASSERT(GetButtonExtraData(buttonid, data) == 0);

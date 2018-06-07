@@ -1,18 +1,25 @@
 {
-    "user": "ScavengeSurvive",
-    "repo": "button",
-    "entry": "test.pwn",
-    "output": "test.amx",
-    "dependencies": [
-        "sampctl/samp-stdlib",
-        "Southclaws/samp-logger",
-        "pawn-lang/YSI-Includes",
-        "samp-incognito/samp-streamer-plugin",
-        "ScavengeSurvive/action-text",
-        "ScavengeSurvive/mathutil"
-    ],
-    "dev_dependencies": ["ScavengeSurvive/test-boilerplate"],
-    "runtime": {
-        "mode": "y_testing"
-    }
+	"user": "ScavengeSurvive",
+	"repo": "button",
+	"tag": "1.7.2",
+	"entry": "test.pwn",
+	"output": "test.amx",
+	"dependencies": [
+		"sampctl/samp-stdlib",
+		"Southclaws/samp-logger",
+		"pawn-lang/YSI-Includes",
+		"samp-incognito/samp-streamer-plugin",
+		"ScavengeSurvive/action-text",
+		"ScavengeSurvive/mathutil",
+		"Southclaws/pawn-errors"
+	],
+	"dev_dependencies": [
+		"ScavengeSurvive/test-boilerplate"
+	],
+	"runtime": {
+		"version": "0.3.7",
+		"mode": "y_testing",
+		"rcon_password": "password",
+		"port": 7777
+	}
 }

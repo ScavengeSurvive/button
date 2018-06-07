@@ -1,7 +1,7 @@
 // built-in include guard removal
 // just in case the user has a local dependency with the same file name
 #if defined _inc_button
-    #undef _inc_button
+	#undef _inc_button
 #endif
 // custom include-guard to ensure we don't duplicate
 #if defined _button_included
@@ -11,6 +11,7 @@
 
 #include <a_samp>
 #include <logger>
+#include <errors>
 #include <YSI\y_iterate>
 #include <YSI\y_timers>
 #include <streamer>
@@ -29,7 +30,7 @@
 
 // Maximum amount of buttons that can be created.
 #if !defined BTN_MAX
-	#define BTN_MAX (8192)
+	#define BTN_MAX (Button:8192)
 #endif
 
 // Maximum string length for labels and action-text strings.
@@ -53,7 +54,7 @@
 #endif
 
 // Validity check constant
-#define INVALID_BUTTON_ID (-1)
+#define INVALID_BUTTON_ID (Button:-1)
 
 
 DEFINE_HOOK_REPLACEMENT(Button , Btn);
@@ -62,7 +63,7 @@ DEFINE_HOOK_REPLACEMENT(Button , Btn);
 // Functions
 
 
-forward CreateButton(Float:x, Float:y, Float:z, text[], world = 0, interior = 0, Float:areasize = 1.0, label = 0, labeltext[] = "", labelcolour = 0xFFFF00FF, Float:streamdist = BTN_DEFAULT_STREAMDIST, testlos = true);
+forward Button:CreateButton(Float:x, Float:y, Float:z, text[], world = 0, interior = 0, Float:areasize = 1.0, label = 0, labeltext[] = "", labelcolour = 0xFFFF00FF, Float:streamdist = BTN_DEFAULT_STREAMDIST, testlos = true);
 /*
 # Description
 Creates an interactive button players can activate by pressing F.
@@ -84,7 +85,7 @@ Button ID handle of the newly created button or INVALID_BUTTON_ID if another
 button cannot be created due to BTN_MAX limit.
 */
 
-forward DestroyButton(buttonid);
+forward DestroyButton(Button:id);
 /*
 # Description
 Destroys a button.
@@ -93,19 +94,19 @@ Destroys a button.
 Boolean to indicate success or failure.
 */
 
-forward bool:IsValidButton(buttonid);
+forward bool:IsValidButton(Button:id);
 /*
 # Description
-Checks if buttonid is a valid button ID handle.
+Checks if id is a valid button ID handle.
 */
 
-forward GetButtonArea(buttonid);
+forward GetButtonArea(Button:id);
 /*
 # Description
 Returns the streamer area ID used by a button.
 */
 
-forward SetButtonArea(buttonid, areaid);
+forward SetButtonArea(Button:id, areaid);
 /*
 # Description
 Updates a button's streamer area ID. Note that this does not remove the existing
@@ -115,14 +116,14 @@ area from memory.
 Boolean to indicate success or failure.
 */
 
-forward SetButtonLabel(buttonid, text[], colour = 0xFFFF00FF, Float:range = BTN_DEFAULT_STREAMDIST, testlos = true);
+forward SetButtonLabel(Button:id, text[], colour = 0xFFFF00FF, Float:range = BTN_DEFAULT_STREAMDIST, testlos = true);
 /*
 # Description
 Creates a 3D Text Label at the specified button ID handle, if a label already
 exists it updates the text, colour and range.
 */
 
-forward DestroyButtonLabel(buttonid);
+forward DestroyButtonLabel(Button:id);
 /*
 # Description
 Removes the label from a button.
@@ -131,7 +132,7 @@ Removes the label from a button.
 Boolean to indicate success or failure. 2 if the button did not have a label.
 */
 
-forward GetButtonPos(buttonid, &Float:x, &Float:y, &Float:z);
+forward GetButtonPos(Button:id, &Float:x, &Float:y, &Float:z);
 /*
 # Description
 Stores the button's X, Y and Z into parameters.
@@ -140,7 +141,7 @@ Stores the button's X, Y and Z into parameters.
 Boolean to indicate success or failure.
 */
 
-forward SetButtonPos(buttonid, Float:x, Float:y, Float:z);
+forward SetButtonPos(Button:id, Float:x, Float:y, Float:z);
 /*
 # Description
 Changes the button position (area, label, etc).
@@ -149,7 +150,7 @@ Changes the button position (area, label, etc).
 Boolean to indicate success or failure.
 */
 
-forward GetButtonSize(buttonid, &Float:size);
+forward GetButtonSize(Button:id, &Float:size);
 /*
 # Description
 Returns the size of the specified button's dynamic area.
@@ -158,7 +159,7 @@ Returns the size of the specified button's dynamic area.
 Boolean to indicate success or failure.
 */
 
-forward SetButtonSize(buttonid, Float:size);
+forward SetButtonSize(Button:id, Float:size);
 /*
 # Description
 Sets a button's detection area size.
@@ -167,13 +168,13 @@ Sets a button's detection area size.
 Boolean to indicate success or failure.
 */
 
-forward GetButtonWorld(buttonid);
+forward GetButtonWorld(Button:id);
 /*
 # Description
 Returns the virtual world that a button exists in or -1 if the button is invalid.
 */
 
-forward SetButtonWorld(buttonid, world);
+forward SetButtonWorld(Button:id, world);
 /*
 # Description
 Updates a button's virtual world. Moves all streamer entities to the world too.
@@ -182,13 +183,13 @@ Updates a button's virtual world. Moves all streamer entities to the world too.
 Boolean to indicate success or failure.
 */
 
-forward GetButtonInterior(buttonid);
+forward GetButtonInterior(Button:id);
 /*
 # Description
 Returns the interior that a button exists in or -1 if the button is invalid.
 */
 
-forward SetButtonInterior(buttonid, interior);
+forward SetButtonInterior(Button:id, interior);
 /*
 # Description
 Updates a button's interior. Moves all streamer entities to the interior too.
@@ -197,13 +198,13 @@ Updates a button's interior. Moves all streamer entities to the interior too.
 Boolean to indicate success or failure.
 */
 
-forward GetButtonText(buttonid, text[]);
+forward GetButtonText(Button:id, text[]);
 /*
 # Description
 Returns the text assigned to a button that appears on-screen when a player walks near it.
 */
 
-forward SetButtonText(buttonid, text[]);
+forward SetButtonText(Button:id, text[]);
 /*
 # Description
 Updates the text that appears on-screen when a player walks near the button.
@@ -212,7 +213,7 @@ Updates the text that appears on-screen when a player walks near the button.
 Boolean to indicate success or failure.
 */
 
-forward SetButtonExtraData(buttonid, data);
+forward SetButtonExtraData(Button:id, data);
 /*
 # Description
 Sets the button's extra data field, this is one cell of blank space allocated for each button.
@@ -221,7 +222,7 @@ Sets the button's extra data field, this is one cell of blank space allocated fo
 Boolean to indicate success or failure.
 */
 
-forward GetButtonExtraData(buttonid, &data);
+forward GetButtonExtraData(Button:id, &data);
 /*
 # Description
 Retrieves the integer assigned to the button set with SetButtonExtraData.
@@ -261,13 +262,13 @@ Returns a list of buttons that a player is standing in the areas of.
 Boolean to indicate success or failure.
 */
 
-forward GetPlayerAngleToButton(playerid, buttonid, &Float:angle);
+forward GetPlayerAngleToButton(playerid, Button:id, &Float:angle);
 /*
 # Description
 Returns the angle in degrees from a player to a button.
 */
 
-forward GetButtonAngleToPlayer(playerid, buttonid, &Float:angle);
+forward GetButtonAngleToPlayer(playerid, Button:id, &Float:angle);
 /*
 # Description
 Returns the angle in degrees from a button to a player.
@@ -277,7 +278,7 @@ Returns the angle in degrees from a button to a player.
 // Events
 
 
-forward OnButtonPress(playerid, buttonid);
+forward OnButtonPress(playerid, Button:id);
 /*
 # Called
 When a player presses the F/Enter key while at a button.
@@ -287,19 +288,19 @@ If the player is within the trigger zone of multiple buttons, return 1 to
 cancel calling OnButtonPress for any other buttons.
 */
 
-forward OnButtonRelease(playerid, buttonid);
+forward OnButtonRelease(playerid, Button:id);
 /*
 # Called
 When a player releases the F/Enter key after pressing it while at a button.
 */
 
-forward OnPlayerEnterButtonArea(playerid, buttonid);
+forward OnPlayerEnterButtonArea(playerid, Button:id);
 /*
 # Called
 When a player enters the dynamic streamed area of a button.
 */
 
-forward OnPlayerLeaveButtonArea(playerid, buttonid);
+forward OnPlayerLeaveButtonArea(playerid, Button:id);
 /*
 # Called
 When a player leaves the dynamic streamed area of a button.
@@ -313,42 +314,32 @@ When a player leaves the dynamic streamed area of a button.
 ==============================================================================*/
 
 
-enum E_BTN_DATA
-{
-			btn_area,
-Text3D:		btn_label,
-Float:		btn_posX,
-Float:		btn_posY,
-Float:		btn_posZ,
-Float:		btn_size,
-			btn_world,
-			btn_interior,
-			btn_text[BTN_MAX_TEXT],
-
-			btn_exData
+enum E_BTN_DATA {
+	btn_area,
+	Text3D:btn_label,
+	Float:btn_posX,
+	Float:btn_posY,
+	Float:btn_posZ,
+	Float:btn_size,
+	btn_world,
+	btn_interior,
+	btn_text[BTN_MAX_TEXT],
+	btn_exData
 }
 
-enum e_button_range_data
-{
-			btn_buttonId,
-Float:		btn_distance
+enum e_button_range_data {
+	Button:btn_buttonId,
+	Float:btn_distance
 }
 
-
-new
-			btn_Data[BTN_MAX][E_BTN_DATA],
-   Iterator:btn_Index<BTN_MAX>
-	#if defined DEBUG_LABELS_BUTTON
-		,
-			btn_DebugLabelType,
-			btn_DebugLabelID[BTN_MAX]
-	#endif
-		;
 
 static
-			btn_Near[MAX_PLAYERS][BTN_MAX_INRANGE],
-   Iterator:btn_NearIndex[MAX_PLAYERS]<BTN_MAX_INRANGE>,
-			btn_Pressing[MAX_PLAYERS];
+	btn_Data[BTN_MAX][E_BTN_DATA],
+	btn_Near[MAX_PLAYERS][BTN_MAX_INRANGE],
+	Iterator:btn_NearIndex[MAX_PLAYERS]<BTN_MAX_INRANGE>,
+	Button:btn_Pressing[MAX_PLAYERS];
+
+new Iterator:btn_Index<_:BTN_MAX>;
 
 
 /*==============================================================================
@@ -384,79 +375,79 @@ hook OnPlayerConnect(playerid) {
 ==============================================================================*/
 
 
-stock CreateButton(
+stock Button:CreateButton(
 	Float:x, Float:y, Float:z, text[],
 	world = 0, interior = 0, Float:areasize = 1.0, label = 0,
 	labeltext[] = "", labelcolour = 0xFFFF00FF, Float:streamdist = BTN_DEFAULT_STREAMDIST, testlos = true
 ) {
-	new buttonid = Iter_Free(btn_Index);
+	new Button:id = Button:Iter_Free(btn_Index);
 
-	if(buttonid == INVALID_ITERATOR_SLOT) {
+	if(_:id == ITER_NONE) {
 		err("BTN_MAX limit reached");
 		return INVALID_BUTTON_ID;
 	}
 
-	btn_Data[buttonid][btn_area] = CreateDynamicSphere(x, y, z, areasize, world, interior);
-	strcpy(btn_Data[buttonid][btn_text], text, BTN_MAX_TEXT);
-	btn_Data[buttonid][btn_posX] = x;
-	btn_Data[buttonid][btn_posY] = y;
-	btn_Data[buttonid][btn_posZ] = z;
-	btn_Data[buttonid][btn_size] = areasize;
-	btn_Data[buttonid][btn_world] = world;
-	btn_Data[buttonid][btn_interior] = interior;
+	btn_Data[id][btn_area] = CreateDynamicSphere(x, y, z, areasize, world, interior);
+	strcpy(btn_Data[id][btn_text], text, BTN_MAX_TEXT);
+	btn_Data[id][btn_posX] = x;
+	btn_Data[id][btn_posY] = y;
+	btn_Data[id][btn_posZ] = z;
+	btn_Data[id][btn_size] = areasize;
+	btn_Data[id][btn_world] = world;
+	btn_Data[id][btn_interior] = interior;
 
 	if (label) {
-		btn_Data[buttonid][btn_label] = CreateDynamic3DTextLabel(labeltext, labelcolour, x, y, z, streamdist, .testlos = testlos, .worldid = world, .interiorid = interior, .streamdistance = streamdist);
+		btn_Data[id][btn_label] = CreateDynamic3DTextLabel(labeltext, labelcolour, x, y, z, streamdist, .testlos = testlos, .worldid = world, .interiorid = interior, .streamdistance = streamdist);
 	} else {
-		btn_Data[buttonid][btn_label] = Text3D:INVALID_3DTEXT_ID;
+		btn_Data[id][btn_label] = Text3D:INVALID_3DTEXT_ID;
 	}
 
 	new data[2];
 
 	data[0] = BTN_STREAMER_AREA_IDENTIFIER;
-	data[1] = buttonid;
+	data[1] = _:id;
 
-	Streamer_SetArrayData(STREAMER_TYPE_AREA, btn_Data[buttonid][btn_area], E_STREAMER_EXTRA_ID, data, 2);
+	Streamer_SetArrayData(STREAMER_TYPE_AREA, btn_Data[id][btn_area], E_STREAMER_EXTRA_ID, data, 2);
 
-	Iter_Add(btn_Index, buttonid);
+	Iter_Add(btn_Index, _:id);
 
-	return buttonid;
+	return id;
 }
 
-stock DestroyButton(buttonid) {
-	if(!Iter_Contains(btn_Index, buttonid)) {
+stock DestroyButton(Button:id) {
+	if(!Iter_Contains(btn_Index, _:id)) {
 		return 1;
 	}
 
 	foreach(new i : Player) {
-		if(IsPlayerInDynamicArea(i, btn_Data[buttonid][btn_area])) {
-			process_LeaveDynamicArea(i, btn_Data[buttonid][btn_area]);
+		if(IsPlayerInDynamicArea(i, btn_Data[id][btn_area])) {
+			process_LeaveDynamicArea(i, btn_Data[id][btn_area]);
 		}
 	}
 
-	DestroyDynamicArea(btn_Data[buttonid][btn_area]);
+	DestroyDynamicArea(btn_Data[id][btn_area]);
 
-	if(IsValidDynamic3DTextLabel(btn_Data[buttonid][btn_label])) {
-		DestroyDynamic3DTextLabel(btn_Data[buttonid][btn_label]);
+	if(IsValidDynamic3DTextLabel(btn_Data[id][btn_label])) {
+		DestroyDynamic3DTextLabel(btn_Data[id][btn_label]);
 	}
 
-	btn_Data[buttonid][btn_area] = -1;
-	btn_Data[buttonid][btn_label] = Text3D:INVALID_3DTEXT_ID;
-	btn_Data[buttonid][btn_posX] = 0.0;
-	btn_Data[buttonid][btn_posY] = 0.0;
-	btn_Data[buttonid][btn_posZ] = 0.0;
-	btn_Data[buttonid][btn_size] = 0.0;
-	btn_Data[buttonid][btn_world] = 0;
-	btn_Data[buttonid][btn_interior] = 0;
-	btn_Data[buttonid][btn_text][0] = EOS;
+	btn_Data[id][btn_area] = -1;
+	btn_Data[id][btn_label] = Text3D:INVALID_3DTEXT_ID;
+	btn_Data[id][btn_posX] = 0.0;
+	btn_Data[id][btn_posY] = 0.0;
+	btn_Data[id][btn_posZ] = 0.0;
+	btn_Data[id][btn_size] = 0.0;
+	btn_Data[id][btn_world] = 0;
+	btn_Data[id][btn_interior] = 0;
+	btn_Data[id][btn_text][0] = EOS;
 
-	Iter_Remove(btn_Index, buttonid);
+	Iter_Remove(btn_Index, _:id);
 
 	return 0;
 }
 
-stock bool:IsValidButton(buttonid) {
-	if(!Iter_Contains(btn_Index, buttonid)) {
+stock bool:IsValidButton(Button:id) {
+	if(!Iter_Contains(btn_Index, _:id)) {
 		return false;
 	}
 
@@ -465,48 +456,48 @@ stock bool:IsValidButton(buttonid) {
 
 
 // btn_area
-stock GetButtonArea(buttonid) {
-	if(!Iter_Contains(btn_Index, buttonid)) {
+stock GetButtonArea(Button:id) {
+	if(!Iter_Contains(btn_Index, _:id)) {
 		return -1;
 	}
 
-	return btn_Data[buttonid][btn_area];
+	return btn_Data[id][btn_area];
 }
 
-stock SetButtonArea(buttonid, areaid) {
-	if(!Iter_Contains(btn_Index, buttonid)) {
+stock SetButtonArea(Button:id, areaid) {
+	if(!Iter_Contains(btn_Index, _:id)) {
 		return 1;
 	}
 
-	btn_Data[buttonid][btn_area] = areaid;
+	btn_Data[id][btn_area] = areaid;
 
 	return 0;
 }
 
 
 // btn_label
-stock SetButtonLabel(buttonid, text[], colour = 0xFFFF00FF, Float:range = BTN_DEFAULT_STREAMDIST, testlos = true) {
-	if(!Iter_Contains(btn_Index, buttonid)) {
+stock SetButtonLabel(Button:id, text[], colour = 0xFFFF00FF, Float:range = BTN_DEFAULT_STREAMDIST, testlos = true) {
+	if(!Iter_Contains(btn_Index, _:id)) {
 		return 1;
 	}
 
-	if(IsValidDynamic3DTextLabel(btn_Data[buttonid][btn_label])) {
-		UpdateDynamic3DTextLabelText(btn_Data[buttonid][btn_label], colour, text);
+	if(IsValidDynamic3DTextLabel(btn_Data[id][btn_label])) {
+		UpdateDynamic3DTextLabelText(btn_Data[id][btn_label], colour, text);
 		return 0;
 	}
 
-	btn_Data[buttonid][btn_label] = CreateDynamic3DTextLabel(
+	btn_Data[id][btn_label] = CreateDynamic3DTextLabel(
 		text,
 		colour,
-		btn_Data[buttonid][btn_posX],
-		btn_Data[buttonid][btn_posY],
-		btn_Data[buttonid][btn_posZ],
+		btn_Data[id][btn_posX],
+		btn_Data[id][btn_posY],
+		btn_Data[id][btn_posZ],
 		range,
 		_,
 		_,
 		testlos,
-		btn_Data[buttonid][btn_world],
-		btn_Data[buttonid][btn_interior],
+		btn_Data[id][btn_world],
+		btn_Data[id][btn_interior],
 		_,
 		range
 	);
@@ -514,17 +505,17 @@ stock SetButtonLabel(buttonid, text[], colour = 0xFFFF00FF, Float:range = BTN_DE
 	return 0;
 }
 
-stock DestroyButtonLabel(buttonid) {
-	if(!Iter_Contains(btn_Index, buttonid)) {
+stock DestroyButtonLabel(Button:id) {
+	if(!Iter_Contains(btn_Index, _:id)) {
 		return 1;
 	}
 
-	if(!IsValidDynamic3DTextLabel(btn_Data[buttonid][btn_label])) {
+	if(!IsValidDynamic3DTextLabel(btn_Data[id][btn_label])) {
 		return 2;
 	}
 
-	DestroyDynamic3DTextLabel(btn_Data[buttonid][btn_label]);
-	btn_Data[buttonid][btn_label] = Text3D:INVALID_3DTEXT_ID;
+	DestroyDynamic3DTextLabel(btn_Data[id][btn_label]);
+	btn_Data[id][btn_label] = Text3D:INVALID_3DTEXT_ID;
 
 	return 0;
 }
@@ -532,155 +523,155 @@ stock DestroyButtonLabel(buttonid) {
 // btn_posX
 // btn_posY
 // btn_posZ
-stock GetButtonPos(buttonid, &Float:x, &Float:y, &Float:z) {
-	if(!Iter_Contains(btn_Index, buttonid)) {
+stock GetButtonPos(Button:id, &Float:x, &Float:y, &Float:z) {
+	if(!Iter_Contains(btn_Index, _:id)) {
 		return 1;
 	}
 
-	x = btn_Data[buttonid][btn_posX];
-	y = btn_Data[buttonid][btn_posY];
-	z = btn_Data[buttonid][btn_posZ];
+	x = btn_Data[id][btn_posX];
+	y = btn_Data[id][btn_posY];
+	z = btn_Data[id][btn_posZ];
 
 	return 0;
 }
 
-stock SetButtonPos(buttonid, Float:x, Float:y, Float:z) {
-	if(!Iter_Contains(btn_Index, buttonid)) {
+stock SetButtonPos(Button:id, Float:x, Float:y, Float:z) {
+	if(!Iter_Contains(btn_Index, _:id)) {
 		return 0;
 	}
 
-	Streamer_SetFloatData(STREAMER_TYPE_AREA, btn_Data[buttonid][btn_area], E_STREAMER_X, x);
-	Streamer_SetFloatData(STREAMER_TYPE_AREA, btn_Data[buttonid][btn_area], E_STREAMER_Y, y);
-	Streamer_SetFloatData(STREAMER_TYPE_AREA, btn_Data[buttonid][btn_area], E_STREAMER_Z, z);
+	Streamer_SetFloatData(STREAMER_TYPE_AREA, btn_Data[id][btn_area], E_STREAMER_X, x);
+	Streamer_SetFloatData(STREAMER_TYPE_AREA, btn_Data[id][btn_area], E_STREAMER_Y, y);
+	Streamer_SetFloatData(STREAMER_TYPE_AREA, btn_Data[id][btn_area], E_STREAMER_Z, z);
 
-	if(IsValidDynamic3DTextLabel(btn_Data[buttonid][btn_label])) {
-		Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, btn_Data[buttonid][btn_label], E_STREAMER_X, x);
-		Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, btn_Data[buttonid][btn_label], E_STREAMER_Y, y);
-		Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, btn_Data[buttonid][btn_label], E_STREAMER_Z, z);
+	if(IsValidDynamic3DTextLabel(btn_Data[id][btn_label])) {
+		Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, btn_Data[id][btn_label], E_STREAMER_X, x);
+		Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, btn_Data[id][btn_label], E_STREAMER_Y, y);
+		Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, btn_Data[id][btn_label], E_STREAMER_Z, z);
 	}
 
-	btn_Data[buttonid][btn_posX] = x;
-	btn_Data[buttonid][btn_posY] = y;
-	btn_Data[buttonid][btn_posZ] = z;
+	btn_Data[id][btn_posX] = x;
+	btn_Data[id][btn_posY] = y;
+	btn_Data[id][btn_posZ] = z;
 
 	return 1;
 }
 
 // btn_size
-stock GetButtonSize(buttonid, &Float:size) {
-	if(!Iter_Contains(btn_Index, buttonid)) {
+stock GetButtonSize(Button:id, &Float:size) {
+	if(!Iter_Contains(btn_Index, _:id)) {
 		return 1;
 	}
 
-	size = btn_Data[buttonid][btn_size];
+	size = btn_Data[id][btn_size];
 	return 0;
 }
 
-stock SetButtonSize(buttonid, Float:size) {
-	if(!Iter_Contains(btn_Index, buttonid)) {
+stock SetButtonSize(Button:id, Float:size) {
+	if(!Iter_Contains(btn_Index, _:id)) {
 		return 1;
 	}
 
-	Streamer_SetFloatData(STREAMER_TYPE_AREA, btn_Data[buttonid][btn_area], E_STREAMER_SIZE, size);
-	btn_Data[buttonid][btn_size] = size;
+	Streamer_SetFloatData(STREAMER_TYPE_AREA, btn_Data[id][btn_area], E_STREAMER_SIZE, size);
+	btn_Data[id][btn_size] = size;
 
 	return 0;
 }
 
 // btn_world
-stock GetButtonWorld(buttonid) {
-	if(!Iter_Contains(btn_Index, buttonid)) {
+stock GetButtonWorld(Button:id) {
+	if(!Iter_Contains(btn_Index, _:id)) {
 		return -1;
 	}
 
-	return btn_Data[buttonid][btn_world];
+	return btn_Data[id][btn_world];
 }
 
-stock SetButtonWorld(buttonid, world) {
-	if(!Iter_Contains(btn_Index, buttonid)) {
+stock SetButtonWorld(Button:id, world) {
+	if(!Iter_Contains(btn_Index, _:id)) {
 		return 1;
 	}
 
-	if(btn_Data[buttonid][btn_world] != world) {
-		Streamer_SetIntData(STREAMER_TYPE_AREA, btn_Data[buttonid][btn_area], E_STREAMER_WORLD_ID, world);
+	if(btn_Data[id][btn_world] != world) {
+		Streamer_SetIntData(STREAMER_TYPE_AREA, btn_Data[id][btn_area], E_STREAMER_WORLD_ID, world);
 
-		if(IsValidDynamic3DTextLabel(btn_Data[buttonid][btn_label])) {
-			Streamer_SetIntData(STREAMER_TYPE_3D_TEXT_LABEL, btn_Data[buttonid][btn_label], E_STREAMER_WORLD_ID, world);
+		if(IsValidDynamic3DTextLabel(btn_Data[id][btn_label])) {
+			Streamer_SetIntData(STREAMER_TYPE_3D_TEXT_LABEL, btn_Data[id][btn_label], E_STREAMER_WORLD_ID, world);
 		}
 
-		btn_Data[buttonid][btn_world] = world;
+		btn_Data[id][btn_world] = world;
 	}
 
 	return 0;
 }
 
 // btn_interior
-stock GetButtonInterior(buttonid) {
-	if(!Iter_Contains(btn_Index, buttonid)) {
+stock GetButtonInterior(Button:id) {
+	if(!Iter_Contains(btn_Index, _:id)) {
 		return -1;
 	}
 
-	return btn_Data[buttonid][btn_interior];
+	return btn_Data[id][btn_interior];
 }
 
-stock SetButtonInterior(buttonid, interior) {
-	if(!Iter_Contains(btn_Index, buttonid)) {
+stock SetButtonInterior(Button:id, interior) {
+	if(!Iter_Contains(btn_Index, _:id)) {
 		return 1;
 	}
 
-	if(btn_Data[buttonid][btn_interior] != interior) {
-		Streamer_SetIntData(STREAMER_TYPE_AREA, btn_Data[buttonid][btn_area], E_STREAMER_INTERIOR_ID, interior);
+	if(btn_Data[id][btn_interior] != interior) {
+		Streamer_SetIntData(STREAMER_TYPE_AREA, btn_Data[id][btn_area], E_STREAMER_INTERIOR_ID, interior);
 
-		if(IsValidDynamic3DTextLabel(btn_Data[buttonid][btn_label])) {
-			Streamer_SetIntData(STREAMER_TYPE_3D_TEXT_LABEL, btn_Data[buttonid][btn_label], E_STREAMER_INTERIOR_ID, interior);
+		if(IsValidDynamic3DTextLabel(btn_Data[id][btn_label])) {
+			Streamer_SetIntData(STREAMER_TYPE_3D_TEXT_LABEL, btn_Data[id][btn_label], E_STREAMER_INTERIOR_ID, interior);
 		}
 
-		btn_Data[buttonid][btn_interior] = interior;
+		btn_Data[id][btn_interior] = interior;
 	}
 
 	return 0;
 }
 
 // btn_text
-stock GetButtonText(buttonid, text[]) {
-	if(!Iter_Contains(btn_Index, buttonid)) {
+stock GetButtonText(Button:id, text[]) {
+	if(!Iter_Contains(btn_Index, _:id)) {
 		return 1;
 	}
 
 	text[0] = EOS;
-	strcat(text, btn_Data[buttonid][btn_text], BTN_MAX_TEXT);
+	strcat(text, btn_Data[id][btn_text], BTN_MAX_TEXT);
 
 	return 0;
 }
 
-stock SetButtonText(buttonid, text[]) {
-	if(!Iter_Contains(btn_Index, buttonid)) {
+stock SetButtonText(Button:id, text[]) {
+	if(!Iter_Contains(btn_Index, _:id)) {
 		return 1;
 	}
 
-	btn_Data[buttonid][btn_text][0] = EOS;
-	strcat(btn_Data[buttonid][btn_text], text, BTN_MAX_TEXT);
+	btn_Data[id][btn_text][0] = EOS;
+	strcat(btn_Data[id][btn_text], text, BTN_MAX_TEXT);
 
 	return 0;
 }
 
 // btn_exData
-stock SetButtonExtraData(buttonid, data) {
-	if(!Iter_Contains(btn_Index, buttonid)) {
+stock SetButtonExtraData(Button:id, data) {
+	if(!Iter_Contains(btn_Index, _:id)) {
 		return 1;
 	}
 
-	btn_Data[buttonid][btn_exData] = data;
+	btn_Data[id][btn_exData] = data;
 
 	return 0;
 }
 
-stock GetButtonExtraData(buttonid, &data) {
-	if(!Iter_Contains(btn_Index, buttonid)) {
+stock GetButtonExtraData(Button:id, &data) {
+	if(!Iter_Contains(btn_Index, _:id)) {
 		return 1;
 	}
 
-	data = btn_Data[buttonid][btn_exData];
+	data = btn_Data[id][btn_exData];
 
 	return 0;
 }
@@ -744,7 +735,7 @@ stock GetPlayerButtonList(playerid, list[], &size, bool:validate = false) {
 			if(!IsPlayerInDynamicArea(playerid, btn_Data[btn_Near[playerid][i]][btn_area])) {
 				err("player incorrectly flagged as inside button area",
 					_i("playerid", playerid),
-					_i("buttonid", btn_Near[playerid][i]));
+					_i("id", btn_Near[playerid][i]));
 
 				Iter_SafeRemove(btn_NearIndex[playerid], i, i);
 				continue;
@@ -761,8 +752,8 @@ stock GetPlayerButtonList(playerid, list[], &size, bool:validate = false) {
 	return 0;
 }
 
-stock GetPlayerAngleToButton(playerid, buttonid, &Float:angle) {
-	if(!Iter_Contains(btn_Index, buttonid)) {
+stock GetPlayerAngleToButton(playerid, Button:id, &Float:angle) {
+	if(!Iter_Contains(btn_Index, _:id)) {
 		return 1;
 	}
 
@@ -777,13 +768,13 @@ stock GetPlayerAngleToButton(playerid, buttonid, &Float:angle) {
 
 	GetPlayerPos(playerid, x, y, z);
 
-	angle = GetAngleToPoint(x, y, btn_Data[buttonid][btn_posX], btn_Data[buttonid][btn_posY]);
+	angle = GetAngleToPoint(x, y, btn_Data[id][btn_posX], btn_Data[id][btn_posY]);
 
 	return 0;
 }
 
-stock GetButtonAngleToPlayer(playerid, buttonid, &Float:angle) {
-	if(!Iter_Contains(btn_Index, buttonid)) {
+stock GetButtonAngleToPlayer(playerid, Button:id, &Float:angle) {
+	if(!Iter_Contains(btn_Index, _:id)) {
 		return 1;
 	}
 
@@ -798,7 +789,7 @@ stock GetButtonAngleToPlayer(playerid, buttonid, &Float:angle) {
 
 	GetPlayerPos(playerid, x, y, z);
 
-	angle = GetAngleToPoint(btn_Data[buttonid][btn_posX], btn_Data[buttonid][btn_posY], x, y);
+	angle = GetAngleToPoint(btn_Data[id][btn_posX], btn_Data[id][btn_posY], x, y);
 
 	return 0;
 }
@@ -820,7 +811,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 			}
 
 			new
-				buttonid,
+				Button:id,
 				Float:x,
 				Float:y,
 				Float:z,
@@ -835,19 +826,19 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 					break;
 				}
 
-				buttonid = btn_Near[playerid][i];
-				distance = GetDistance3D(x, y, z, btn_Data[buttonid][btn_posX], btn_Data[buttonid][btn_posY], btn_Data[buttonid][btn_posZ]);
+				id = Button:btn_Near[playerid][i];
+				distance = GetDistance3D(x, y, z, btn_Data[id][btn_posX], btn_Data[id][btn_posY], btn_Data[id][btn_posZ]);
 
-				if(distance > btn_Data[buttonid][btn_size]) {
+				if(distance > btn_Data[id][btn_size]) {
 					continue;
 				}
 
-				if(!(btn_Data[buttonid][btn_posZ] - btn_Data[buttonid][btn_size] <= z <= btn_Data[buttonid][btn_posZ] + btn_Data[buttonid][btn_size])) {
+				if(!(btn_Data[id][btn_posZ] - btn_Data[id][btn_size] <= z <= btn_Data[id][btn_posZ] + btn_Data[id][btn_size])) {
 					continue;
 				}
 
 
-				list[index][btn_buttonId] = buttonid;
+				list[index][btn_buttonId] = id;
 				list[index][btn_distance] = distance;
 
 				index++;
@@ -864,7 +855,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 
 		if(oldkeys & 16) {
 			if(btn_Pressing[playerid] != INVALID_BUTTON_ID) {
-				CallLocalFunction("OnButtonRelease", "dd", playerid, btn_Pressing[playerid]);
+				CallLocalFunction("OnButtonRelease", "dd", playerid, _:btn_Pressing[playerid]);
 				btn_Pressing[playerid] = INVALID_BUTTON_ID;
 			}
 		}
@@ -878,7 +869,7 @@ _btn_SortButtons(array[][e_button_range_data], left, right) {
 		tmp_left = left,
 		tmp_right = right,
 		Float:pivot = array[(left + right) / 2][btn_distance],
-		buttonid,
+		Button:id,
 		Float:distance;
 
 	while(tmp_left <= tmp_right) {
@@ -889,9 +880,9 @@ _btn_SortButtons(array[][e_button_range_data], left, right) {
 			tmp_right--;
 		}
 		if(tmp_left <= tmp_right) {
-			buttonid = array[tmp_left][btn_buttonId];
+			id = array[tmp_left][btn_buttonId];
 			array[tmp_left][btn_buttonId] = array[tmp_right][btn_buttonId];
-			array[tmp_right][btn_buttonId] = buttonid;
+			array[tmp_right][btn_buttonId] = id;
 
 			distance = array[tmp_left][btn_distance];
 			array[tmp_left][btn_distance] = array[tmp_right][btn_distance];
@@ -911,14 +902,14 @@ _btn_SortButtons(array[][e_button_range_data], left, right) {
 	}
 }
 
-Internal_OnButtonPress(playerid, buttonid) {
-	if(!Iter_Contains(btn_Index, buttonid)) {
+Internal_OnButtonPress(playerid, Button:id) {
+	if(!Iter_Contains(btn_Index, _:id)) {
 		return 0;
 	}
 
-	btn_Pressing[playerid] = buttonid;
+	btn_Pressing[playerid] = id;
 
-	if(CallLocalFunction("OnButtonPress", "dd", playerid, buttonid)) {
+	if(CallLocalFunction("OnButtonPress", "dd", playerid, _:id)) {
 		return 1;
 	}
 
@@ -942,7 +933,7 @@ hook OnPlayerEnterDynArea(playerid, areaid) {
 				btn_Near[playerid][cell] = data[1];
 				Iter_Add(btn_NearIndex[playerid], cell);
 
-				ShowActionText(playerid, btn_Data[data[1]][btn_text]);
+				ShowActionText(playerid, btn_Data[Button:data[1]][btn_text]);
 				CallLocalFunction("OnPlayerEnterButtonArea", "dd", playerid, data[1]);
 			}
 		}

@@ -5,15 +5,15 @@
 	"output": "test.amx",
 	"dependencies": [
 		"sampctl/samp-stdlib",
-		"Southclaws/samp-logger",
+		"Southclaws/samp-logger:1.2.6",
 		"pawn-lang/YSI-Includes",
-		"samp-incognito/samp-streamer-plugin",
-		"ScavengeSurvive/action-text",
-		"ScavengeSurvive/mathutil",
-		"Southclaws/pawn-errors"
+		"samp-incognito/samp-streamer-plugin:v2.9.3",
+		"ScavengeSurvive/action-text:1.0.0",
+		"ScavengeSurvive/mathutil:1.0.0",
+		"Southclaws/pawn-errors:1.2.1"
 	],
 	"dev_dependencies": [
-		"ScavengeSurvive/test-boilerplate"
+		"ScavengeSurvive/test-boilerplate:1.1.0"
 	],
 	"runtime": {
 		"version": "0.3.7",

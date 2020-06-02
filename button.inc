@@ -241,7 +241,7 @@ forward GetPlayerButtonID(playerid, &Button:id);
 Returns the closest button that a player is standing within the area of.
 */
 
-forward GetPlayerButtonList(playerid, list[], &size, bool:validate = false);
+forward GetPlayerButtonList(playerid, Button:list[], &size, bool:validate = false);
 /*
 # Description
 Returns a list of buttons that a player is standing in the areas of.
@@ -722,7 +722,7 @@ stock GetPlayerButtonID(playerid, &Button:id) {
 	return 3;
 }
 
-stock GetPlayerButtonList(playerid, list[], &size, bool:validate = false) {
+stock GetPlayerButtonList(playerid, Button:list[], &size, bool:validate = false) {
 	if(!IsPlayerConnected(playerid)) {
 		return 1;
 	}
@@ -738,7 +738,7 @@ stock GetPlayerButtonList(playerid, list[], &size, bool:validate = false) {
 			if(!IsPlayerInDynamicArea(playerid, btn_Data[btn_Near[playerid][i]][btn_area])) {
 				err("player incorrectly flagged as inside button area",
 					_i("playerid", playerid),
-					_i("id", btn_Near[playerid][i]));
+					_i("id", _:btn_Near[playerid][i]));
 
 				Iter_SafeRemove(btn_NearIndex[playerid], i, i);
 				continue;

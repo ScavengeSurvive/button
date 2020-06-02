@@ -738,17 +738,17 @@ stock GetPlayerButtonList(playerid, list[], &size, bool:validate = false) {
 			if(!IsPlayerInDynamicArea(playerid, btn_Data[btn_Near[playerid][i]][btn_area])) {
 				err("player incorrectly flagged as inside button area",
 					_i("playerid", playerid),
-					_i("id", btn_Near[playerid][i]));
+					_i("id", _:btn_Near[playerid][i]));
 
 				Iter_SafeRemove(btn_NearIndex[playerid], i, i);
 				continue;
 			}
 
-			list[size++] = btn_Near[playerid][i];
+			list[size++] = _:btn_Near[playerid][i];
 		}
 	} else {
 		foreach(new i : btn_NearIndex[playerid]) {
-			list[size++] = btn_Near[playerid][i];
+			list[size++] = _:btn_Near[playerid][i];
 		}
 	}
 

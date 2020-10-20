@@ -63,7 +63,7 @@ DEFINE_HOOK_REPLACEMENT(Button , Btn);
 // Functions
 
 
-forward Button:CreateButton(Float:x, Float:y, Float:z, text[], world = 0, interior = 0, Float:areasize = 1.0, label = 0, labeltext[] = "", labelcolour = 0xFFFF00FF, Float:streamdist = BTN_DEFAULT_STREAMDIST, testlos = true);
+forward Button:CreateButton(Float:x, Float:y, Float:z, const text[], world = 0, interior = 0, Float:areasize = 1.0, label = 0, const labeltext[] = "", labelcolour = 0xFFFF00FF, Float:streamdist = BTN_DEFAULT_STREAMDIST, testlos = true);
 /*
 # Description
 Creates an interactive button players can activate by pressing F.
@@ -116,7 +116,7 @@ area from memory.
 Boolean to indicate success or failure.
 */
 
-forward SetButtonLabel(Button:id, text[], colour = 0xFFFF00FF, Float:range = BTN_DEFAULT_STREAMDIST, testlos = true);
+forward SetButtonLabel(Button:id, const text[], colour = 0xFFFF00FF, Float:range = BTN_DEFAULT_STREAMDIST, testlos = true);
 /*
 # Description
 Creates a 3D Text Label at the specified button ID handle, if a label already
@@ -204,7 +204,7 @@ forward GetButtonText(Button:id, text[]);
 Returns the text assigned to a button that appears on-screen when a player walks near it.
 */
 
-forward SetButtonText(Button:id, text[]);
+forward SetButtonText(Button:id, const text[]);
 /*
 # Description
 Updates the text that appears on-screen when a player walks near the button.
@@ -339,7 +339,8 @@ static
 	Iterator:btn_NearIndex[MAX_PLAYERS]<BTN_MAX_INRANGE>,
 	Button:btn_Pressing[MAX_PLAYERS];
 
-new Iterator:btn_Index<_:BTN_MAX>;
+const BTN_ITER_SIZE = _:BTN_MAX;
+new Iterator:btn_Index<BTN_ITER_SIZE>;
 
 
 /*==============================================================================
@@ -376,9 +377,9 @@ hook OnPlayerConnect(playerid) {
 
 
 stock Button:CreateButton(
-	Float:x, Float:y, Float:z, text[],
+	Float:x, Float:y, Float:z, const text[],
 	world = 0, interior = 0, Float:areasize = 1.0, label = 0,
-	labeltext[] = "", labelcolour = 0xFFFF00FF, Float:streamdist = BTN_DEFAULT_STREAMDIST, testlos = true
+	const labeltext[] = "", labelcolour = 0xFFFF00FF, Float:streamdist = BTN_DEFAULT_STREAMDIST, testlos = true
 ) {
 	new Button:id = Button:Iter_Free(btn_Index);
 
@@ -476,7 +477,7 @@ stock SetButtonArea(Button:id, areaid) {
 
 
 // btn_label
-stock SetButtonLabel(Button:id, text[], colour = 0xFFFF00FF, Float:range = BTN_DEFAULT_STREAMDIST, testlos = true) {
+stock SetButtonLabel(Button:id, const text[], colour = 0xFFFF00FF, Float:range = BTN_DEFAULT_STREAMDIST, testlos = true) {
 	if(!Iter_Contains(btn_Index, _:id)) {
 		return 1;
 	}
@@ -644,7 +645,7 @@ stock GetButtonText(Button:id, text[]) {
 	return 0;
 }
 
-stock SetButtonText(Button:id, text[]) {
+stock SetButtonText(Button:id, const text[]) {
 	if(!Iter_Contains(btn_Index, _:id)) {
 		return 1;
 	}
@@ -736,9 +737,9 @@ stock GetPlayerButtonList(playerid, Button:list[], &size, bool:validate = false)
 	if(validate) {
 		foreach(new i : btn_NearIndex[playerid]) {
 			if(!IsPlayerInDynamicArea(playerid, btn_Data[btn_Near[playerid][i]][btn_area])) {
-				err("player incorrectly flagged as inside button area",
-					_i("playerid", playerid),
-					_i("id", _:btn_Near[playerid][i]));
+				Logger_Err("player incorrectly flagged as inside button area",
+					Logger_I("playerid", playerid),
+					Logger_I("id", _:btn_Near[playerid][i]));
 
 				Iter_SafeRemove(btn_NearIndex[playerid], i, i);
 				continue;
@@ -809,7 +810,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 	if(newkeys & 16) {
 		if(!IsPlayerInAnyVehicle(playerid) && Iter_Count(btn_NearIndex[playerid]) > 0) {
 			if(!IsPlayerInAnyDynamicArea(playerid)) {
-				err("player is not in areas but list isn't empty", _i("playerid", playerid));
+				Logger_Err("player is not in areas but list isn't empty", Logger_I("playerid", playerid));
 				Iter_Clear(btn_NearIndex[playerid]);
 			}
 

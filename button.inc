@@ -384,7 +384,8 @@ stock Button:CreateButton(
 	new Button:id = Button:Iter_Free(btn_Index);
 
 	if(_:id == ITER_NONE) {
-		err("BTN_MAX limit reached");
+		Logger_Err("BTN_MAX limit reached",
+			Logger_I("BTN_MAX", BTN_MAX));
 		return INVALID_BUTTON_ID;
 	}
 

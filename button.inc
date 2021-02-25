@@ -12,7 +12,7 @@
 #include <a_samp>
 #include <logger>
 #include <errors>
-#include <YSI_Coding\y_iterate>
+#include <YSI_Data\y_iterate>
 #include <YSI_Coding\y_timers>
 #include <streamer>
 #include <action-text>
@@ -384,7 +384,8 @@ stock Button:CreateButton(
 	new Button:id = Button:Iter_Free(btn_Index);
 
 	if(_:id == ITER_NONE) {
-		err("BTN_MAX limit reached");
+		Logger_Err("BTN_MAX limit reached",
+			Logger_I("BTN_MAX", _:BTN_MAX));
 		return INVALID_BUTTON_ID;
 	}
 

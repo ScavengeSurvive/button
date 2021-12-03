@@ -390,7 +390,7 @@ stock Button:CreateButton(
 	}
 
 	btn_Data[id][btn_area] = CreateDynamicSphere(x, y, z, areasize, world, interior);
-	strcpy(btn_Data[id][btn_text], text, BTN_MAX_TEXT);
+	StrCpy(btn_Data[id][btn_text], text, BTN_MAX_TEXT);
 	btn_Data[id][btn_posX] = x;
 	btn_Data[id][btn_posY] = y;
 	btn_Data[id][btn_posZ] = z;

@@ -48,6 +48,12 @@
 	#define BTN_MAX_INRANGE (8)
 #endif
 
+// The key player has to press to trigger the button.
+// Keys: https://open.mp/docs/scripting/resources/keys
+#if !defined BTN_KEY
+	#define BTN_KEY (16)
+#endif
+
 // A value to identify streamer object EXTRA_ID data array type.
 #if !defined BTN_STREAMER_AREA_IDENTIFIER
 	#define BTN_STREAMER_AREA_IDENTIFIER (100)
@@ -66,7 +72,7 @@ DEFINE_HOOK_REPLACEMENT(Button , Btn);
 forward Button:CreateButton(Float:x, Float:y, Float:z, const text[], world = 0, interior = 0, Float:areasize = 1.0, label = 0, const labeltext[] = "", labelcolour = 0xFFFF00FF, Float:streamdist = BTN_DEFAULT_STREAMDIST, testlos = true);
 /*
 # Description
-Creates an interactive button players can activate by pressing F.
+Creates an interactive button players can activate by pressing BTN_KEY.
 
 # Parameters
 - x, y, z: World position.
@@ -281,7 +287,7 @@ Returns the angle in degrees from a button to a player.
 forward OnButtonPress(playerid, Button:id);
 /*
 # Called
-When a player presses the F/Enter key while at a button.
+When a player presses the BTN_KEY key while at a button.
 
 # Returns
 If the player is within the trigger zone of multiple buttons, return 1 to
@@ -291,7 +297,7 @@ cancel calling OnButtonPress for any other buttons.
 forward OnButtonRelease(playerid, Button:id);
 /*
 # Called
-When a player releases the F/Enter key after pressing it while at a button.
+When a player releases the BTN_KEY key after pressing it while at a button.
 */
 
 forward OnPlayerEnterButtonArea(playerid, Button:id);
@@ -808,7 +814,7 @@ stock GetButtonAngleToPlayer(playerid, Button:id, &Float:angle) {
 
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
-	if(newkeys & 16) {
+	if(newkeys & BTN_KEY) {
 		if(!IsPlayerInAnyVehicle(playerid) && Iter_Count(btn_NearIndex[playerid]) > 0) {
 			if(!IsPlayerInAnyDynamicArea(playerid)) {
 				Logger_Err("player is not in areas but list isn't empty", Logger_I("playerid", playerid));
@@ -858,7 +864,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 			}
 		}
 
-		if(oldkeys & 16) {
+		if(oldkeys & BTN_KEY) {
 			if(btn_Pressing[playerid] != INVALID_BUTTON_ID) {
 				CallLocalFunction("OnButtonRelease", "dd", playerid, _:btn_Pressing[playerid]);
 				btn_Pressing[playerid] = INVALID_BUTTON_ID;

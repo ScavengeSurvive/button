@@ -1,8 +1,8 @@
 #define RUN_TESTS
 #include "button.inc"
 
-#include <YSI\y_testing>
-#include <YSI\y_hooks>
+#include <YSI_Core\y_testing>
+#include <YSI_Coding\y_hooks>
 
 
 Test:ButtonCreate() {

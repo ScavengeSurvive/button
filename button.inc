@@ -363,7 +363,7 @@ hook OnScriptInit() {
 		btn_Pressing[i] = INVALID_BUTTON_ID;
 	}
 
-	return Y_HOOKS_CONTINUE_RETURN_0;
+	return 0;
 }
 
 hook OnPlayerConnect(playerid) {
@@ -371,7 +371,7 @@ hook OnPlayerConnect(playerid) {
 
 	btn_Pressing[playerid] = INVALID_BUTTON_ID;
 
-	return Y_HOOKS_CONTINUE_RETURN_0;
+	return 0;
 }
 
 
@@ -872,7 +872,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 		}
 	}
 
-	return Y_HOOKS_CONTINUE_RETURN_1;
+	return 1;
 }
 
 _btn_SortButtons(array[][e_button_range_data], left, right) {
@@ -925,10 +925,6 @@ Internal_OnButtonPress(playerid, Button:id) {
 	}
 
 	return 0;
-}
-
-timer btn_Unfreeze[BTN_TELEPORT_FREEZE_TIME](playerid) {
-	TogglePlayerControllable(playerid, true);
 }
 
 hook OnPlayerEnterDynArea(playerid, areaid) {

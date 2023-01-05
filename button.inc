@@ -748,7 +748,7 @@ stock GetPlayerButtonList(playerid, Button:list[], &size, bool:validate = false)
 					Logger_I("playerid", playerid),
 					Logger_I("id", _:btn_Near[playerid][i]));
 
-				Iter_SafeRemove(btn_NearIndex[playerid], i, i);
+				Iter_Remove(btn_NearIndex[playerid], i);
 				continue;
 			}
 

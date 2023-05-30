@@ -4,7 +4,9 @@
 	"entry": "test.pwn",
 	"output": "test.amx",
 	"dependencies": [
-		"sampctl/samp-stdlib",
+		"openmultiplayer/omp-stdlib",
+		"pawn-lang/samp-stdlib@open.mp",
+		"pawn-lang/pawn-stdlib@open.mp",
 		"Southclaws/samp-logger",
 		"pawn-lang/YSI-Includes",
 		"samp-incognito/samp-streamer-plugin:v2.9.3",
@@ -16,7 +18,7 @@
 		"ScavengeSurvive/test-boilerplate"
 	],
 	"runtime": {
-		"version": "0.3.7",
+		"version": "openmp",
 		"mode": "y_testing",
 		"rcon_password": "password",
 		"port": 7777

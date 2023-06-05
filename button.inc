@@ -9,7 +9,7 @@
 #endif
 #define _button_included
 
-#include <a_samp>
+#include <open.mp>
 #include <logger>
 #include <errors>
 #include <YSI_Data\y_iterate>
@@ -51,7 +51,7 @@
 // The key player has to press to trigger the button.
 // Keys: https://open.mp/docs/scripting/resources/keys
 #if !defined BTN_KEY
-	#define BTN_KEY (16)
+	#define BTN_KEY KEY_SECONDARY_ATTACK
 #endif
 
 // A value to identify streamer object EXTRA_ID data array type.
@@ -813,7 +813,7 @@ stock GetButtonAngleToPlayer(playerid, Button:id, &Float:angle) {
 ==============================================================================*/
 
 
-hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
+hook OnPlayerKeyStateChange(playerid, KEY:newkeys, KEY:oldkeys) {
 	if(newkeys & BTN_KEY) {
 		if(!IsPlayerInAnyVehicle(playerid) && Iter_Count(btn_NearIndex[playerid]) > 0) {
 			if(!IsPlayerInAnyDynamicArea(playerid)) {

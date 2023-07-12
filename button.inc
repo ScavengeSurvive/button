@@ -62,6 +62,14 @@
 // Validity check constant
 #define INVALID_BUTTON_ID (Button:-1)
 
+#if !defined STREAMER_TAG_AREA
+	#define STREAMER_TAG_AREA _
+#endif
+
+#if !defined STREAMER_TAG_3D_TEXT_LABEL
+	#define STREAMER_TAG_3D_TEXT_LABEL Text3D
+#endif
+
 
 DEFINE_HOOK_REPLACEMENT(Button , Btn);
 
@@ -106,13 +114,13 @@ forward bool:IsValidButton(Button:id);
 Checks if id is a valid button ID handle.
 */
 
-forward GetButtonArea(Button:id);
+forward STREAMER_TAG_AREA:GetButtonArea(Button:id);
 /*
 # Description
 Returns the streamer area ID used by a button.
 */
 
-forward SetButtonArea(Button:id, areaid);
+forward SetButtonArea(Button:id, STREAMER_TAG_AREA:areaid);
 /*
 # Description
 Updates a button's streamer area ID. Note that this does not remove the existing
@@ -321,8 +329,8 @@ When a player leaves the dynamic streamed area of a button.
 
 
 enum E_BTN_DATA {
-	btn_area,
-	Text3D:btn_label,
+	STREAMER_TAG_AREA:btn_area,
+	STREAMER_TAG_3D_TEXT_LABEL:btn_label,
 	Float:btn_posX,
 	Float:btn_posY,
 	Float:btn_posZ,
@@ -407,7 +415,7 @@ stock Button:CreateButton(
 	if (label) {
 		btn_Data[id][btn_label] = CreateDynamic3DTextLabel(labeltext, labelcolour, x, y, z, streamdist, .testlos = testlos, .worldid = world, .interiorid = interior, .streamdistance = streamdist);
 	} else {
-		btn_Data[id][btn_label] = Text3D:INVALID_3DTEXT_ID;
+		btn_Data[id][btn_label] = STREAMER_TAG_3D_TEXT_LABEL:INVALID_STREAMER_ID;
 	}
 
 	new data[2];
@@ -439,8 +447,8 @@ stock DestroyButton(Button:id) {
 		DestroyDynamic3DTextLabel(btn_Data[id][btn_label]);
 	}
 
-	btn_Data[id][btn_area] = -1;
-	btn_Data[id][btn_label] = Text3D:INVALID_3DTEXT_ID;
+	btn_Data[id][btn_area] = STREAMER_TAG_AREA:INVALID_STREAMER_ID;
+	btn_Data[id][btn_label] = STREAMER_TAG_3D_TEXT_LABEL:INVALID_STREAMER_ID;
 	btn_Data[id][btn_posX] = 0.0;
 	btn_Data[id][btn_posY] = 0.0;
 	btn_Data[id][btn_posZ] = 0.0;
@@ -464,15 +472,15 @@ stock bool:IsValidButton(Button:id) {
 
 
 // btn_area
-stock GetButtonArea(Button:id) {
+stock STREAMER_TAG_AREA:GetButtonArea(Button:id) {
 	if(!Iter_Contains(btn_Index, _:id)) {
-		return -1;
+		return STREAMER_TAG_AREA:INVALID_STREAMER_ID;
 	}
 
 	return btn_Data[id][btn_area];
 }
 
-stock SetButtonArea(Button:id, areaid) {
+stock SetButtonArea(Button:id, STREAMER_TAG_AREA:areaid) {
 	if(!Iter_Contains(btn_Index, _:id)) {
 		return 1;
 	}
@@ -927,7 +935,7 @@ Internal_OnButtonPress(playerid, Button:id) {
 	return 0;
 }
 
-hook OnPlayerEnterDynArea(playerid, areaid) {
+hook OnPlayerEnterDynArea(playerid, STREAMER_TAG_AREA:areaid) {
 	if(!IsPlayerInAnyVehicle(playerid) && Iter_Count(btn_NearIndex[playerid]) < BTN_MAX_INRANGE) {
 		new data[2];
 
@@ -947,11 +955,11 @@ hook OnPlayerEnterDynArea(playerid, areaid) {
 	}
 }
 
-hook OnPlayerLeaveDynArea(playerid, areaid) {
+hook OnPlayerLeaveDynArea(playerid, STREAMER_TAG_AREA:areaid) {
 	process_LeaveDynamicArea(playerid, areaid);
 }
 
-process_LeaveDynamicArea(playerid, areaid) {
+process_LeaveDynamicArea(playerid, STREAMER_TAG_AREA:areaid) {
 	if(!IsValidDynamicArea(areaid)) {
 		return 1;
 	}

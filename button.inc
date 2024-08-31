@@ -9,7 +9,16 @@
 #endif
 #define _button_included
 
-#include <open.mp>
+#tryinclude <open.mp>
+
+#if !defined _INC_open_mp
+	#include <a_samp>
+
+	#if !defined KEY
+		#define KEY: _:
+	#endif
+#endif
+
 #include <logger>
 #include <errors>
 #include <YSI_Data\y_iterate>

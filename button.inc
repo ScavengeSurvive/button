@@ -116,7 +116,7 @@ area from memory.
 Boolean to indicate success or failure.
 */
 
-forward SetButtonLabel(Button:id, text[], colour = 0xFFFF00FF, Float:range = BTN_DEFAULT_STREAMDIST, testlos = true);
+forward SetButtonLabel(Button:id, const text[], colour = 0xFFFF00FF, Float:range = BTN_DEFAULT_STREAMDIST, testlos = true);
 /*
 # Description
 Creates a 3D Text Label at the specified button ID handle, if a label already
@@ -476,7 +476,7 @@ stock SetButtonArea(Button:id, areaid) {
 
 
 // btn_label
-stock SetButtonLabel(Button:id, text[], colour = 0xFFFF00FF, Float:range = BTN_DEFAULT_STREAMDIST, testlos = true) {
+stock SetButtonLabel(Button:id, const text[], colour = 0xFFFF00FF, Float:range = BTN_DEFAULT_STREAMDIST, testlos = true) {
 	if(!Iter_Contains(btn_Index, _:id)) {
 		return 1;
 	}

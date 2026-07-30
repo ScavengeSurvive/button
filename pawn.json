@@ -4,10 +4,11 @@
 	"entry": "test.pwn",
 	"output": "test.amx",
 	"dependencies": [
-		"sampctl/samp-stdlib",
+		"sampctl/samp-stdlib:0.3.7-R2-2-1",
 		"Southclaws/samp-logger:1.2.6",
-		"pawn-lang/YSI-Includes",
-		"samp-incognito/samp-streamer-plugin:v2.9.3",
+		"Zeex/amx_assembly:v1.0",
+		"pawn-lang/YSI-Includes:v4.0.2",
+		"samp-incognito/samp-streamer-plugin:v2.9.6",
 		"ScavengeSurvive/action-text:1.0.0",
 		"ScavengeSurvive/mathutil:1.0.0",
 		"Southclaws/pawn-errors:1.2.1"
@@ -15,6 +16,9 @@
 	"dev_dependencies": [
 		"ScavengeSurvive/test-boilerplate:1.1.0"
 	],
+	"build": {
+		"args": ["-d3", "-;+", "-(+", "-\\+", "-Z+", "-psamp-prefix"]
+	},
 	"runtime": {
 		"version": "0.3.7",
 		"mode": "y_testing",

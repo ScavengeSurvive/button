@@ -12,13 +12,13 @@
 #include <a_samp>
 #include <logger>
 #include <errors>
-#include <YSI\y_iterate>
-#include <YSI\y_timers>
+#include <YSI_Data\y_iterate>
+#include <YSI_Coding\y_timers>
 #include <streamer>
 #include <action-text>
 #include <mathutil>
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 
 /*==============================================================================
@@ -383,7 +383,7 @@ stock Button:CreateButton(
 	new Button:id = Button:Iter_Free(btn_Index);
 
 	if(_:id == ITER_NONE) {
-		err("BTN_MAX limit reached");
+		Logger_Err("BTN_MAX limit reached");
 		return INVALID_BUTTON_ID;
 	}
 
@@ -736,9 +736,9 @@ stock GetPlayerButtonList(playerid, list[], &size, bool:validate = false) {
 	if(validate) {
 		foreach(new i : btn_NearIndex[playerid]) {
 			if(!IsPlayerInDynamicArea(playerid, btn_Data[btn_Near[playerid][i]][btn_area])) {
-				err("player incorrectly flagged as inside button area",
-					_i("playerid", playerid),
-					_i("id", btn_Near[playerid][i]));
+				Logger_Err("player incorrectly flagged as inside button area",
+					Logger_I("playerid", playerid),
+					Logger_I("id", btn_Near[playerid][i]));
 
 				Iter_SafeRemove(btn_NearIndex[playerid], i, i);
 				continue;
@@ -809,7 +809,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 	if(newkeys & 16) {
 		if(!IsPlayerInAnyVehicle(playerid) && Iter_Count(btn_NearIndex[playerid]) > 0) {
 			if(!IsPlayerInAnyDynamicArea(playerid)) {
-				err("player is not in areas but list isn't empty", _i("playerid", playerid));
+				Logger_Err("player is not in areas but list isn't empty", Logger_I("playerid", playerid));
 				Iter_Clear(btn_NearIndex[playerid]);
 			}
 
